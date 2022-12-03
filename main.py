@@ -10,6 +10,7 @@ def main(page: ft.Page):
 
     # setting the app background color
     page.theme_mode="light"
+    page.theme = ft.theme.Theme(color_scheme_seed="#038F75")
 
     # show BottomSheet function
     def show_bs(e):
