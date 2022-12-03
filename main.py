@@ -1,6 +1,5 @@
 import flet as ft
 import requests
-import json
 
 def main(page: ft.Page):
     # setting the app title
@@ -19,19 +18,42 @@ def main(page: ft.Page):
 
     # search functionality
     def search_click(e):
-        json_response = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{search_word.value}")
         definitions_list_view.clean()
-        for i in json_response.json():
-            for j in i['meanings'][0]['definitions']:
-                definitions_list_view.controls.append(
-                    ft.Container(
-                        ft.Text(f"{i['word'].upper()}\nas a {i['meanings'][0]['partOfSpeech']}\n\n{j['definition']}", style="titleMedium", color=ft.colors.BLUE_GREY),
-                        margin=5,
-                        padding=10,
-                        border_radius=ft.border_radius.all(20),
-                        bgcolor="#DFF7F3",
-                    )
+        json_response = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{search_word.value}")
+        if search_word.value.lower() == "bhavani":
+            definitions_list_view.controls.append(
+                ft.Container(
+                    ft.Text(f"BHAVANI\namazing friend\n\nThe most beautiful and cute girl on the planet.", style="titleMedium", color=ft.colors.BLUE_GREY),
+                    margin=5,
+                    padding=10,
+                    border_radius=ft.border_radius.all(20),
+                    bgcolor="#DFF7F3",
                 )
+            )
+        else:
+            try:
+                if json_response.json()['title'] == "No Definitions Found":
+                    definitions_list_view.controls.append(
+                        ft.Container(
+                            ft.Text(f"Oops! no definitions found, please re-check the word...", style="titleMedium", color=ft.colors.BLUE_GREY),
+                            margin=5,
+                            padding=10,
+                            border_radius=ft.border_radius.all(20),
+                            bgcolor="#DFF7F3",
+                        )
+                    )
+            except:
+                for i in json_response.json():
+                    for j in i['meanings'][0]['definitions']:
+                        definitions_list_view.controls.append(
+                            ft.Container(
+                                ft.Text(f"{i['word'].upper()}\nas a {i['meanings'][0]['partOfSpeech']}\n\n{j['definition']}", style="titleMedium", color=ft.colors.BLUE_GREY),
+                                margin=5,
+                                padding=10,
+                                border_radius=ft.border_radius.all(20),
+                                bgcolor="#DFF7F3",
+                            )
+                        )
         page.update()
 
     # search
