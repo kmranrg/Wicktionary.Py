@@ -1,11 +1,13 @@
 import flet as ft
+import requests
+import json
 
 def main(page: ft.Page):
     # setting the app title
     page.title="Wicktionary"
 
     # enabling scroll in the page
-    page.scroll="hidden"
+    page.auto_scroll=True
 
     # setting the app background color
     page.theme_mode="light"
@@ -15,12 +17,27 @@ def main(page: ft.Page):
         bs.open=True
         bs.update()
 
+    # search functionality
     def search_click(e):
-        pass
+        json_response = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{search_word.value}")
+        definitions_list_view.clean()
+        for i in json_response.json():
+            for j in i['meanings'][0]['definitions']:
+                definitions_list_view.controls.append(
+                    ft.Container(
+                        ft.Text(f"{i['word'].upper()}\nas a {i['meanings'][0]['partOfSpeech']}\n\n{j['definition']}", style="titleMedium", color=ft.colors.BLUE_GREY),
+                        margin=5,
+                        padding=10,
+                        border_radius=ft.border_radius.all(20),
+                        bgcolor="#DFF7F3",
+                    )
+                )
+        page.update()
 
     # search
-    search_word = ft.TextField(hint_text="search anything...", color="#038F75", border_color="#038F75", expand=True)
-    search_button = ft.FloatingActionButton(icon=ft.icons.SEARCH, on_click=search_click)
+    search_word = ft.TextField(hint_text="search anything...", color="#038F75", border_color="#038F75", cursor_color="#04705C", selection_color="#DFF7F3")
+    search_button = ft.FloatingActionButton(icon=ft.icons.SEARCH, on_click=search_click, bgcolor="#DFF7F3")
+    definitions_list_view = ft.ListView(expand=True, spacing=10)
 
     # BottomSheet for Developer Info
     bs = ft.BottomSheet(
@@ -59,7 +76,8 @@ def main(page: ft.Page):
                 search_button
             ],
             alignment="center"
-        )
+        ),
+        definitions_list_view,
     )
 
 ft.app(target=main, view=ft.WEB_BROWSER)
