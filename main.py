@@ -24,11 +24,17 @@ def main(page: ft.Page):
         if search_word.value.lower() == "bhavani":
             definitions_list_view.controls.append(
                 ft.Container(
-                    ft.Text(f"BHAVANI\namazing friend\n\nThe most beautiful and cute girl on the planet.", style="titleMedium", color=ft.colors.BLUE_GREY),
-                    margin=5,
-                    padding=10,
-                    border_radius=ft.border_radius.all(20),
-                    bgcolor="#DFF7F3",
+                    ft.Column(
+                                    controls=[
+                                        ft.Text(f"bhavani", style="titleMedium", weight="bold", color=ft.colors.BLUE_GREY),
+                                        ft.Text(f"an amazing friend", style="titleMedium", italic=False, color=ft.colors.RED),
+                                        ft.Text(f"The most beautiful and cute girl on the planet.", style="titleMedium", color=ft.colors.BLUE_GREY),
+                                    ]
+                                ),
+                                margin=5,
+                                padding=10,
+                                border_radius=ft.border_radius.all(20),
+                                bgcolor="#DFF7F3",
                 )
             )
         else:
@@ -48,7 +54,13 @@ def main(page: ft.Page):
                     for j in i['meanings'][0]['definitions']:
                         definitions_list_view.controls.append(
                             ft.Container(
-                                ft.Text(f"{i['word'].upper()}\nas a {i['meanings'][0]['partOfSpeech']}\n\n{j['definition']}", style="titleMedium", color=ft.colors.BLUE_GREY),
+                                ft.Column(
+                                    controls=[
+                                        ft.Text(f"{i['word']}", style="titleMedium", weight="bold", color=ft.colors.BLUE_GREY),
+                                        ft.Text(f"as {i['meanings'][0]['partOfSpeech']}", style="titleMedium", italic=False, color=ft.colors.RED),
+                                        ft.Text(f"{j['definition']}", style="titleMedium", color=ft.colors.BLUE_GREY),
+                                    ]
+                                ),
                                 margin=5,
                                 padding=10,
                                 border_radius=ft.border_radius.all(20),
