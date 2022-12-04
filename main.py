@@ -91,7 +91,7 @@ def main(page: ft.Page):
                 horizontal_alignment="center"
             ),
             padding=10,
-            bgcolor="#04705C"
+            bgcolor="#04705C",
         ),
         open=False,
     )
@@ -145,7 +145,6 @@ def main(page: ft.Page):
                             alignment="center"
                         ),
                         definitions_list_view,
-                        ft.ElevatedButton("Go Back", on_click=lambda _: page.go("/")),
                     ],
                 )
             )
