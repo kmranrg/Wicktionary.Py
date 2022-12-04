@@ -3,14 +3,19 @@ import requests
 
 def main(page: ft.Page):
     # setting the app title
-    page.title="Wicktionary"
+    page.title = "Wicktionary"
 
     # enabling scroll in the page
-    page.auto_scroll=True
+    page.auto_scroll = True
 
     # setting the app background color
-    page.theme_mode="light"
+    page.theme_mode = "light"
     page.theme = ft.theme.Theme(color_scheme_seed="#038F75")
+
+    # setting the custom font
+    page.fonts = {
+        "CabinSketchBold": "fonts/CabinSketchBold.ttf"
+    }
 
     # show BottomSheet function
     def show_bs(e):
@@ -79,7 +84,7 @@ def main(page: ft.Page):
         ft.Container(
             ft.Column(
                 [
-                    ft.Text("Developer: Anurag || Inspired By: Bhavani", color=ft.colors.WHITE),
+                    ft.Text("Developer: Anurag || Inspired By: Bhavani", color=ft.colors.WHITE, font_family="CabinSketchBold"),
                 ],
                 tight=True,
                 horizontal_alignment="center"
@@ -95,7 +100,7 @@ def main(page: ft.Page):
     page.appbar = ft.AppBar(
         leading=ft.Icon(ft.icons.BOOK),
         leading_width=40,
-        title=ft.Text("Wicktionary"),
+        title=ft.Text("WICKTIONARY", font_family="CabinSketchBold"),
         color="#FFFFFF",
         center_title=False,
         bgcolor="#038F75",
@@ -115,4 +120,4 @@ def main(page: ft.Page):
         definitions_list_view,
     )
 
-ft.app(target=main, view=ft.WEB_BROWSER)
+ft.app(target=main, view=ft.WEB_BROWSER, assets_dir="assets")
