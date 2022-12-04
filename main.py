@@ -14,7 +14,8 @@ def main(page: ft.Page):
 
     # setting the custom font
     page.fonts = {
-        "CabinSketchBold": "fonts/CabinSketchBold.ttf"
+        "CabinSketchBold": "fonts/CabinSketchBold.ttf",
+        "CabinSketchRegular": "fonts/CabinSketchRegular.ttf"
     }
 
     # show BottomSheet function
@@ -96,28 +97,67 @@ def main(page: ft.Page):
     )
     page.overlay.append(bs)
 
-    # app bar
-    page.appbar = ft.AppBar(
-        leading=ft.Icon(ft.icons.BOOK),
-        leading_width=40,
-        title=ft.Text("WICKTIONARY", font_family="CabinSketchBold"),
-        color="#FFFFFF",
-        center_title=False,
-        bgcolor="#038F75",
-        actions=[
-            ft.IconButton(ft.icons.PERSON, icon_color=ft.colors.WHITE, on_click=show_bs),
-        ],
-    )
+    def route_change(route):
+        page.views.clear()
+        page.views.append(
+            ft.View(
+                "/",
+                [
+                    ft.Column(
+                        controls = [
+                            ft.Row([ft.Text("WICKTIONARY", font_family="CabinSketchBold", color="#FFFFFF", style="displayMedium", text_align="center")],alignment="center"),
+                            ft.Image(
+                                src="logo/app_logo.jpg",
+                                width=300,
+                                height=300,
+                            ),
+                            ft.ElevatedButton(content=ft.Row([ft.Text("LAUNCH DICTIONARY",font_family="CabinSketchRegular", weight="bold"),ft.Icon(ft.icons.LAUNCH)], alignment="center",width=200), on_click=lambda _: page.go("/homepage")),
+                        ],
+                        alignment="spaceEvenly",
+                        horizontal_alignment="center",
+                        expand=True,
+                    ),
+                ],
+                bgcolor="#038F75",
+            )
+        )
+        if page.route == "/homepage":
+            page.views.append(
+                ft.View(
+                    "/homepage",
+                    [
+                        ft.AppBar(
+                            leading=ft.Icon(ft.icons.BOOK),
+                            leading_width=40,
+                            title=ft.Text("WICKTIONARY", font_family="CabinSketchBold"),
+                            color="#FFFFFF",
+                            center_title=False,
+                            bgcolor="#038F75",
+                            actions=[
+                                ft.IconButton(ft.icons.PERSON, icon_color=ft.colors.WHITE, on_click=show_bs),
+                            ],
+                        ),
+                        ft.Row(
+                            [
+                                search_word,
+                                search_button
+                            ],
+                            alignment="center"
+                        ),
+                        definitions_list_view,
+                        ft.ElevatedButton("Go Back", on_click=lambda _: page.go("/")),
+                    ],
+                )
+            )
+        page.update()
 
-    page.add(
-        ft.Row(
-            [
-                search_word,
-                search_button
-            ],
-            alignment="center"
-        ),
-        definitions_list_view,
-    )
+    def view_pop(view):
+        page.views.pop()
+        top_view = page.views[-1]
+        page.go(top_view.route)
+
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+    page.go(page.route)
 
 ft.app(target=main, view=ft.WEB_BROWSER, assets_dir="assets")
