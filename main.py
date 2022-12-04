@@ -85,7 +85,7 @@ def main(page: ft.Page):
         ft.Container(
             ft.Column(
                 [
-                    ft.Text("Developer: Anurag || Inspired By: Bhavani", color=ft.colors.WHITE, font_family="CabinSketchBold"),
+                    ft.Text("Developer: Anurag  ||  Inspired By: Bhavani", color=ft.colors.WHITE, font_family="CabinSketchBold", style="titleMedium"),
                 ],
                 tight=True,
                 horizontal_alignment="center"
@@ -134,7 +134,7 @@ def main(page: ft.Page):
                             center_title=False,
                             bgcolor="#038F75",
                             actions=[
-                                ft.IconButton(ft.icons.PERSON, icon_color=ft.colors.WHITE, on_click=show_bs),
+                                ft.IconButton(ft.icons.INFO_OUTLINE, icon_color=ft.colors.WHITE, on_click=show_bs),
                             ],
                         ),
                         ft.Row(
