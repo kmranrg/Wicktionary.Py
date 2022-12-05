@@ -18,11 +18,6 @@ def main(page: ft.Page):
         "CabinSketchRegular": "fonts/CabinSketchRegular.ttf"
     }
 
-    # show BottomSheet function
-    def show_bs(e):
-        bs.open=True
-        bs.update()
-
     # search functionality
     def search_click(e):
         definitions_list_view.clean()
@@ -75,27 +70,66 @@ def main(page: ft.Page):
                         )
         page.update()
 
+    def developer_info(e):
+        if e.control.selected_index == 1:
+            search_word.visible = False
+            search_button.visible = False
+            definitions_list_view.visible = False
+            developer_view.visible = True
+        else:
+            search_word.visible = True
+            search_button.visible = True
+            definitions_list_view.visible = True
+            developer_view.visible = False
+        page.update()
+
     # search
-    search_word = ft.TextField(hint_text="search anything...", color="#038F75", border_color="#038F75", cursor_color="#04705C", selection_color="#DFF7F3")
+    search_word = ft.TextField(
+        hint_text="search anything...", 
+        border_radius=20, 
+        color="#038F75", 
+        border_color="#038F75", 
+        cursor_color="#04705C", 
+        selection_color="#DFF7F3", 
+        on_submit=lambda e: search_click(e),
+    )
     search_button = ft.FloatingActionButton(icon=ft.icons.SEARCH, on_click=search_click, bgcolor="#DFF7F3")
     definitions_list_view = ft.ListView(expand=True, spacing=10)
 
-    # BottomSheet for Developer Info
-    bs = ft.BottomSheet(
-        ft.Container(
-            ft.Column(
-                [
-                    ft.Text("Developer: Anurag  ||  Inspired By: Bhavani", color=ft.colors.WHITE, font_family="CabinSketchBold", style="titleMedium"),
-                ],
-                tight=True,
-                horizontal_alignment="center"
+    # developer view
+    developer_view = ft.Column(
+        controls=[
+            ft.Image(
+                src="dev/dev.jpg",
+                width=250,
+                height=250,
             ),
-            padding=10,
-            bgcolor="#04705C",
-        ),
-        open=False,
+            ft.Row(
+                [
+                    ft.Text(
+                        "Inspiration: Bhavani\nDeveloper: Anurag",
+                        font_family="CabinSketchRegular",
+                        text_align="center",
+                        style="titleLarge",
+                        weight="bold",
+                    ),
+                ],
+                alignment="center"
+            ),
+            ft.Text(
+                "Copyright Ⓒ All rights reserved",
+                font_family="CabinSketchRegular",
+                text_align="center",
+                style="titleSmall",
+                weight="bold",
+                color=ft.colors.RED_900,
+            ),
+        ],
+        alignment="spaceEvenly",
+        horizontal_alignment="center",
+        expand=True,
     )
-    page.overlay.append(bs)
+    developer_view.visible = False
 
     def route_change(route):
         page.views.clear()
@@ -133,9 +167,7 @@ def main(page: ft.Page):
                             color="#FFFFFF",
                             center_title=False,
                             bgcolor="#038F75",
-                            actions=[
-                                ft.IconButton(ft.icons.INFO_OUTLINE, icon_color=ft.colors.WHITE, on_click=show_bs),
-                            ],
+                            toolbar_height=60,
                         ),
                         ft.Row(
                             [
@@ -145,6 +177,24 @@ def main(page: ft.Page):
                             alignment="center"
                         ),
                         definitions_list_view,
+                        developer_view,
+                        ft.NavigationBar(
+                            destinations=[
+                                ft.NavigationDestination(
+                                    icon=ft.icons.HOME_OUTLINED,
+                                    selected_icon=ft.icons.HOME,
+                                    label="Home",
+                                ),
+                                ft.NavigationDestination(
+                                    icon=ft.icons.PERSON_OUTLINE,
+                                    selected_icon=ft.icons.PERSON,
+                                    label="Developer",
+                                ),
+                            ],
+                            on_change=lambda e: developer_info(e),
+                            height=60,
+                            bgcolor="#FFFFFF"
+                        ),
                     ],
                 )
             )
