@@ -127,7 +127,7 @@ def main(page: ft.Page):
                     "/homepage",
                     [
                         ft.AppBar(
-                            leading=ft.Icon(ft.icons.BOOK),
+                            leading=ft.IconButton(ft.icons.ARROW_BACK_IOS_SHARP, icon_color="#FFFFFF", on_click=lambda _: page.go("/")),
                             leading_width=40,
                             title=ft.Text("WICKTIONARY", font_family="CabinSketchBold"),
                             color="#FFFFFF",
