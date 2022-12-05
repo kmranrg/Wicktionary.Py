@@ -70,6 +70,7 @@ def main(page: ft.Page):
                         )
         page.update()
 
+    # enabling the developer view
     def developer_info(e):
         if e.control.selected_index == 1:
             search_word.visible = False
@@ -82,6 +83,14 @@ def main(page: ft.Page):
             definitions_list_view.visible = True
             developer_view.visible = False
         page.update()
+
+    # page route to homepage from welcome page
+    def go_to_homepage(e):
+        search_word.visible = True
+        search_button.visible = True
+        definitions_list_view.visible = True
+        developer_view.visible = False
+        page.go("/homepage")
 
     # search
     search_word = ft.TextField(
@@ -145,7 +154,7 @@ def main(page: ft.Page):
                                 width=300,
                                 height=300,
                             ),
-                            ft.ElevatedButton(content=ft.Row([ft.Text("LAUNCH DICTIONARY",font_family="CabinSketchRegular", weight="bold"),ft.Icon(ft.icons.LAUNCH)], alignment="center",width=200), on_click=lambda _: page.go("/homepage")),
+                            ft.ElevatedButton(content=ft.Row([ft.Text("LAUNCH DICTIONARY",font_family="CabinSketchRegular", weight="bold"),ft.Icon(ft.icons.LAUNCH)], alignment="center",width=200), on_click=go_to_homepage),
                         ],
                         alignment="spaceEvenly",
                         horizontal_alignment="center",
