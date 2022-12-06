@@ -109,7 +109,7 @@ def main(page: ft.Page):
     developer_view = ft.Column(
         controls=[
             ft.Image(
-                src="dev/dev.jpg",
+                src="dev/dev.png",
                 width=250,
                 height=250,
             ),
