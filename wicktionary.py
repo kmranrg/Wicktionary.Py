@@ -69,7 +69,7 @@ class Wicktionary(ft.UserControl):
                     width=300,
                     height=300,
                 ),
-                ft.ElevatedButton(content=ft.Row([ft.Text("LAUNCH DICTIONARY",font_family="CabinSketchRegular", weight="bold"),ft.Icon(ft.icons.LAUNCH)], alignment="center",width=200), on_click=self.go_to_homepage),
+                ft.ElevatedButton(content=ft.Row([ft.Text("LAUNCH DICTIONARY",font_family="CabinSketchRegular", weight="bold"),ft.Icon(ft.icons.LAUNCH)], alignment="center",width=200), on_click=lambda e: self.go_to_homepage(e)),
             ],
             alignment="spaceEvenly",
             horizontal_alignment="center",
@@ -114,16 +114,23 @@ class Wicktionary(ft.UserControl):
             self.definitions_list_view.controls.append(
                 ft.Container(
                     ft.Column(
-                                    controls=[
-                                        ft.Text(f"bhavani", style="titleMedium", weight="bold", color=ft.colors.BLUE_GREY),
-                                        ft.Text(f"an amazing friend", style="titleMedium", italic=False, color=ft.colors.RED),
-                                        ft.Text(f"The most beautiful and cute girl on the planet.", style="titleMedium", color=ft.colors.BLUE_GREY),
-                                    ]
-                                ),
-                                margin=5,
-                                padding=10,
-                                border_radius=ft.border_radius.all(20),
-                                bgcolor="#DFF7F3",
+                        controls=[
+                            ft.Text(f"bhavani", style="titleMedium", weight="bold", color=ft.colors.BLUE_GREY),
+                            ft.Text(f"an amazing friend", style="titleMedium", italic=False, color=ft.colors.RED),
+                            ft.Text(f"The most beautiful and cute girl on the planet.", style="titleMedium", color=ft.colors.BLUE_GREY),
+                        ]
+                    ),
+                    margin=5,
+                    padding=10,
+                    border_radius=ft.border_radius.all(20),
+                    gradient=ft.LinearGradient(
+                        begin=ft.alignment.top_left,
+                        end=ft.Alignment(0.8, 1),
+                        colors=[
+                            "0xDFF7F3",
+                            "0xFFFFFF",
+                        ],
+                    ),
                 )
             )
         else:
@@ -135,7 +142,14 @@ class Wicktionary(ft.UserControl):
                             margin=5,
                             padding=10,
                             border_radius=ft.border_radius.all(20),
-                            bgcolor="#DFF7F3",
+                            gradient=ft.LinearGradient(
+                                begin=ft.alignment.top_left,
+                                end=ft.Alignment(0.8, 1),
+                                colors=[
+                                    "0xDFF7F3",
+                                    "0xFFFFFF",
+                                ],
+                            ),
                         )
                     )
             except:
@@ -153,7 +167,14 @@ class Wicktionary(ft.UserControl):
                                 margin=5,
                                 padding=10,
                                 border_radius=ft.border_radius.all(20),
-                                bgcolor="#DFF7F3",
+                                gradient=ft.LinearGradient(
+                                    begin=ft.alignment.top_left,
+                                    end=ft.Alignment(0.8, 1),
+                                    colors=[
+                                        "0xDFF7F3",
+                                        "0xFFFFFF",
+                                    ],
+                                ),
                             )
                         )
         self.page.update()
@@ -178,4 +199,5 @@ class Wicktionary(ft.UserControl):
         self.search_button.visible = True
         self.definitions_list_view.visible = True
         self.developer_view.visible = False
+        self.navigation_bar.selected_index = 0
         self.page.go("/homepage")
